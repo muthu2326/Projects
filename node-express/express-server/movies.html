@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Movies</title></head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <body>
+        
+        <h2>Listing Movies - <span id='count'>0</span></h2>
+        <ul id='moviesList'> </ul>
+
+        <form id='form'>
+
+            <h2>Add Movie</h2>
+            <label>Name
+                <input type='input' id='name'> 
+            </label><br><br>
+
+            <label>Rating
+                <input type='radio' name='rating' value='1'>1
+                <input type='radio' name='rating' value='2'>2
+                <input type='radio' name='rating' value='3'>3
+                <input type='radio' name='rating' value='4'>4
+                <input type='radio' name='rating' value='5'>5
+            </label><br><br>
+
+            <label>
+                <select id='genre'>
+                    <option value=''>select</option>
+                    <option value='crime'>crime</option>
+                    <option value='action'>action</option>
+                    <option value='fantacy'>fantacy</option>
+                </select>
+            </label><br><br>
+            <label>
+                <textarea id='desc'></textarea>
+            </label><br><br>
+
+            <label><input type='submit' value='submit'> </label>
+
+        </form>
+
+        <script>
+            const form = document.getElementById('form')
+            const count = document.getElementById('count')
+            const listHandle = document.getElementById('moviesList')
+            
+            const movieName = document.getElementById('name')
+            const rating = document.getElementsByName('rating')
+            const genre = document.getElementById('genre')
+            const desc = document.getElementById('desc')
+
+            function listMovie(movie){
+                const li = document.createElement('li')
+                    li.textContent =  `${movie.name} - ${movie.category} - ${movie.rating}`
+                    listHandle.appendChild(li)
+            }
+
+            axios.get('http://localhost:3000/movies')
+            .then(function(response){
+                const movies = response.data
+                movies.forEach(function(movie){
+                    listMovie(movie)
+                    console.log(movie)
+                })
+                count.textContent = movies.length
+            })
+            .catch(function(err){
+                console.log(err)
+            })
+
+            form.addEventListener('submit', function(e){
+                e.preventDefault()
+                let ratingValue
+                rating.forEach(function(rating){
+                    if(rating.checked == true){
+                        ratingValue = rating.value
+                    }
+                })
+
+                const movie = {
+                    name: movieName.value,
+                    rating: ratingValue,
+                    category: genre.value,
+                    description: desc.value
+                }
+                console.log(movie.name)
+                console.log(movie.rating)
+                console.log(movie.category)
+                console.log(movie.description)
+                
+                axios.post(`http://localhost:3000/movies/create/`)
+                .then(function(movie){
+                    listMovie(movie)
+                })
+
+            })
+
+
+        </script>
+
+    </body>
+</html>

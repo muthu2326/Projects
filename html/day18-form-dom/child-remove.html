@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <body>
+            <ul id='list'>
+                    <li>Pay bills</li>
+                    <li>Buy groceries</li>
+                    <li>Feed the dog</li>
+                    <li>Do laundry</li>
+                  </ul>
+        </ul>
+        <script>
+                const list = document.getElementById('list')
+
+               for(let i = 0; i < list.children.length; i++){
+                    console.log(list.children[i].textContent)
+                }
+
+        </script>
+    </body>
+</html>

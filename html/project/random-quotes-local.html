@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+        <title>Random Quotes(Local)</title>
+    </head>
+    <body align = 'center'>
+        <form id='form'>
+        <h1 >Quotify</h1>
+        <div id='menu-links'>
+            <a href='random-quotes.html'>Random Quotes (API) </a><b>|</b><a href='random-quotes-local.html'>Random Quotes (Local)</a><b>|</b><a href='random-quotes.html'>Add Quotes</a>|<a href='random-quotes.html'>List All (Local)</a>
+        </div>
+        <div style="background-color:rgb(240, 240, 240); margin: 20px; height: 100px; width:1280px;">
+            <span id='quotes' style='font-size: 22px'>
+            </span><br>
+            <span id='author' style='font-size: 20px; padding-top: 400px'></span>
+        </div>
+        <label>
+            <input type='submit' value='Get another Quote' id='submit'>
+        </label>
+
+        <script>
+            const quotesHandle = document.getElementById('quotes')
+            const authorHandle = document.getElementById('author')
+            const formHandle = document.getElementById('form')
+           
+           
+            formHandle.addEventListener('submit',function(e){
+                e.preventDefault()
+                const stored = JSON.parse(localStorage.getItem('localObj'))            
+                const randomNumber = Math.round(Math.random() * stored.length)
+                if(randomNumber < stored.length ){
+                    console.log(randomNumber)
+                    console.log(stored[randomNumber])
+                    qu
+                }else{
+                    // console.log(randomNumber)
+                    // console.log(stored[randomNumber - 1])
+                }
+            })
+        </script>
+        </form>
+    </body>
+</html>

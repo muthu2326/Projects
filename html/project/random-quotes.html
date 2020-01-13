@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+        <title>Random Quotes(Local)</title>
+    </head>
+    <body align = 'center'>
+        <form id='form'>
+        <h1 >Quotify</h1>
+        <div id='menu-links'>
+            <a href='random-quotes.html'>Random Quotes (API) </a><b>|</b><a href='random-quotes-local.html'>Random Quotes (Local)</a><b>|</b><a href='random-quotes.html'>Add Quotes</a>|<a href='random-quotes.html'>List All (Local)</a>
+        </div>
+        <div id='container' style="background-color:rgb(240, 240, 240); margin: 20px; height: 100px; width:1280px;">
+            <span id='quotes' style='font-size: 22px'>
+            </span><br>
+            <span id='author' style='font-size: 20px; padding-top: 400px'></span>
+        </div>
+        <input type='submit' value='Get another Quote' id='submit'>
+    </form>
+
+        <label>
+            <input type='submit' value='save' id='save'>
+        </label>
+
+        <script>
+            let quoteObj = {},author,text
+            const quotesHandle = document.getElementById('quotes')
+            const authorHandle = document.getElementById('author')
+            const formHandle = document.getElementById('form')
+            const container = document.getElementById('container')
+            const saveHandle = document.getElementById('save')
+
+            formHandle.addEventListener('submit',function(e){
+                e.preventDefault()
+                console.log('function called')
+                const xhr = new XMLHttpRequest()
+                xhr.open('GET', 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json&jsonp=?')
+                xhr.send()
+
+                xhr.onload = function(){
+                console.log(JSON.parse(xhr.responseText))
+                const quotes = JSON.parse(xhr.responseText)
+                quotesHandle.innerHTML = `" ${quotes.quoteText}"`
+                authorHandle.innerHTML = `-${quotes.quoteAuthor}`
+                author = quotes.quoteAuthor
+                text = quotes.quoteText
+              }
+        })
+
+        saveHandle.addEventListener('click',function(){
+                    quoteObj = {
+                        author: author,
+                        content: text
+                    }
+                    let stored
+                    if(localStorage.getItem('localObj')){
+                        stored = JSON.parse(localStorage.getItem('localObj'))
+                    }  else{
+                        localStorage.setItem('localObj',JSON.stringify([]))
+                        stored = JSON.parse(localStorage.getItem('localObj'))
+                    }
+
+                    stored.push(quoteObj)
+                    localStorage.setItem('localObj',JSON.stringify(stored))
+
+                    console.log(JSON.parse(localStorage.getItem('localObj')))  
+            })
+
+            
+        </script>
+    </body>
+</html>

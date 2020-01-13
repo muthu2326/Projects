@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Players</title></head>
+    <body>
+
+        <h2>Add Product</h2>
+
+        <form>
+        <label>
+            Category
+            <select id='category'>
+                <option value=''>select</option>
+            </select>
+                </label><br>
+            <label>
+                Sub Category<br>
+                <span id='subCategory'></span>
+            </label><br>
+            <label>Name
+                    <input type='text'>
+            </label><br>
+            <input type='submit'>
+
+    </form>
+        <script>
+            const category = [
+                {id:1, category: 'Electronics'},
+                {id:2, category: "Clothing"}
+            ]
+
+            const subCategory = [
+                {id: 1, category: 'Washing Machine', categoryId:1},
+                {id: 2, category: 'Mobile', categoryId: 1},
+                {id: 3, category: 'Formal', categoryId: 2},
+                {id: 4, category: 'Casual', categoryId: 2}
+            ]
+
+            const categoryHandle = document.getElementById('category')
+            const subCategoryhandle = document.getElementById('subCategory')
+
+            
+            appendHandle(category,categoryHandle)
+
+            categoryHandle.addEventListener('change',function(){
+                const filter = subCategory.filter(function(subCategory){
+                    return subCategory.categoryId == categoryHandle.value
+                })
+                console.dir(filter)
+                
+                appendHandle(subCategory,subCategoryhandle,category)
+            })
+
+            
+            function appendHandle(item, itemHandle){
+                    item.forEach(function(itemName){                        
+                    const option = document.createElement('checkbox')
+                    option.value = itemName.id
+                    // option.textContent = itemName.category  
+                    option.innerHTML = option.category
+                    itemHandle.appendChild(option)
+               })
+        }
+
+         
+        </script>
+    </body>
+
+</html>

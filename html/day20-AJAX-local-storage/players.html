@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Players</title></head>
+    <body>
+        <form id='myForm'>
+            <h2>Dream 11</h2>
+            <h2>Listing Players - <span id='count'></span></h2>
+            <input type='text' id='search' placeholder="search">
+            <ol id='list'>
+            </ol>
+            <label> Sort By
+                <button id='ascending'>ascending</button>
+                <button id='descending'>desending</button>
+            </label><br><br>
+            <br><label>
+                Player name
+                <input type='playerName' id='player' name='name'>
+                <input type='submit' value='add'>
+                <input type='submit' value='delete' id='delete'>
+                <br>
+            
+            </label>
+        </form><br>
+        <input type='submit' value="clear storeage" id='local'>
+        <script>
+
+            let players
+            // local sotrage 
+
+            // check if loacla stoarge is setup is done
+
+            if(localStorage.getItem('players')){
+                players = JSON.parse(localStorage.getItem('players'))
+            }else{
+                localStorage.setItem('players',JSON.stringify([]))
+                players = JSON.parse(localStorage.getItem('players'))
+            }
+
+            const searchHandle = document.getElementById('search')
+            const listHandle = document.getElementById('list')
+            const count = document.getElementById('count')
+            const formHandle = document.getElementById('myForm')
+            const playerHandle = document.getElementById('player')
+            const add = document.getElementById('add')
+            const deleteHandle = document.getElementById('delete')
+            const ascend = document.getElementById('ascending')
+            const desend = document.getElementById('descending')
+            const local = document.getElementById('local')
+
+
+            local.addEventListener('click',function(){
+                // localStorage.clear()
+                console.log(players)
+                //
+                // confirm alert
+                const confirmDelete = confirm('Are you sure to delete?')
+                if(confirmDelete){
+                //     listHandle.innerHTML = ''
+                //     count.innerHTML = 0
+                localStorage.removeItem('players')  // property value
+                    players = []
+                location.reload()
+             }
+            })
+
+            function listBuild(players){
+                listHandle.innerHTML = ''
+                    count.innerHTML = players.length
+                    players.forEach(function(player){
+                    const li = document.createElement('li')
+                    li.textContent = player
+                    listHandle.appendChild(li)
+                })
+            }            
+
+            listBuild(players)
+
+            searchHandle.addEventListener('keyup',function(){
+              const  result = players.filter(function(player){
+                    return player.toLowerCase().includes(searchHandle.value.toLowerCase())
+                })
+                listBuild(result)
+            })
+
+            formHandle.addEventListener('submit',function(event){
+                event.preventDefault()
+                const player = playerHandle.value
+                players.push(player)
+
+                //write back to local storage
+                localStorage.setItem('players',JSON.stringify(players))
+
+                formHandle.reset()
+                listBuild(players)
+            })
+
+            deleteHandle.addEventListener('click',function(e){
+                e.preventDefault()
+
+                players.pop(playerHandle.value)
+                formHandle.reset()
+                listBuild(players)
+            })
+
+            ascend.addEventListener('click',function(){
+                event.preventDefault()
+                listBuild(players.sort())
+            })
+
+            desend.addEventListener('click',function(){
+                event.preventDefault()
+                listBuild(players.sort().reverse())
+            })
+
+        </script>
+    </body>
+
+</html>

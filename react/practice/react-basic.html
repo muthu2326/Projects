@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <title>Listing</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+
+        <script type="text/babel">
+            
+            class DropDown extends React.Component{
+                constructor(){
+                    super()
+                    this.state = {
+                        categories: [
+                            {id: 1, name: 'Stationary'},
+                            {id: 2, name: 'Grocery'}
+                        ],
+                        subCategories: [
+                            {id: 1, catID: 1, name: 'Pen'},
+                            {id: 2, catID: 2, name: 'Bread'},
+                            {id: 3, catID: 1, name: 'Scale'},
+                            {id: 4, catID: 2, name: 'Biscuit'},
+                        ],
+                        sub: []
+                    }
+                }
+               handleChange = (e) => {
+                    const sub = this.state.subCategories.filter((item) => item.catID == e.target.value)
+                    this.setState(() => ({ sub }))
+               }
+                render(){
+                    console.log('hi')
+                    return(
+                        <div>
+                            <h1> Welcome to My react App </h1>
+
+                            <select onChange={this.handleChange}>
+                                <option>select</option>
+                                { this.state.categories.map(category => {
+                                    return <option key={ category.id } value={ category.id }> { category.name } </option>
+                                })}
+                            </select>
+
+                            <select>
+                                <option>select</option>
+                                { this.state.sub.map(subCategory => {
+                                    return <option key={ subCategory.id } value={ subCategory.id }> { subCategory.name } </option>
+                                })}
+                            </select>
+                    </div>
+                    )
+                }
+            }
+            ReactDOM.render(<DropDown />, document.getElementById("root"))
+        </script>
+        
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Table Nodes</title>
+    </head>
+    <body>
+        <input type='text' id='input' value='Ramya'>
+        <table id='table' border=1>
+            <thead>
+                <th>Name</th>
+            </thead>
+            <tbody id='body'>
+                <tr id='row'>
+                    <td>Kavya</td>
+                </tr>
+                <tr>
+                    <td>Ramya</td>
+                </tr>
+                <tr>
+                    <td>Gayathri</td>
+                </tr>
+            </tbody>
+        </table>
+        <script>
+            const tableHandle = document.getElementById('table')
+            const tbodyHandle = document.getElementById('body')
+            const trHandle = document.getElementById('row')
+            const inputHandle = document.getElementById('input')
+        //    const str = 'Ramya'
+          //  const str1 = 'Kavya'
+
+      //      tbodyHandle.removeChild(trHandle)
+            // for(let i = 0; i < tbodyHandle.childElementCount; i++){
+            //         const nodeText = tbodyHandle.children[i].textContent
+            //         console.log(typeof nodeText)
+            //         if(nodeText == 'Ramya'){
+            //             console.log(inputHandle.value,inputHandle.value == nodeText, i)
+            //     }
+            // }
+        </script>
+    </body>
+</html>

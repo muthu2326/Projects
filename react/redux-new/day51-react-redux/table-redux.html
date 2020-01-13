@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+        </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+        <script crossorigin src='https://unpkg.com/axios/dist/axios.min.js'></script>
+        <script crossorigin src='https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.1/redux.js'></script>
+    </head>
+    <body style="background-color: rgb(0, 0, 0)">
+    <div id="root"></div>
+        
+        <script type='text/babel'>
+            const rootHandler=document.getElementById('root')
+            const { createStore, combineReducers } = Redux 
+
+            const usersInitialState =[
+            {id:1, name:"arjun", email:"arjun@gmail.com"},
+                {id:2, name:"varun", email:"varun@gmail.com"},
+                {id:3, name:"tom", email:"tom@gmail.com"},
+                {id:4, name:"nick", email:"nick@gmail.com"}
+            ]
+            const usersReducer = (state = usersInitialState, action) => {
+                switch(action.type) {
+                    case 'REMOVE_USER' : 
+                    return state.filter(user => user.id != action.payload)
+                    case 'USER_FORM' : 
+                        return [...state,action.payload]
+                    default: 
+                        return [...state]
+                        // return Object.assign({}, state)
+                }
+            }
+
+            const store = createStore(combineReducers({
+                users: usersReducer
+            }))
+
+            store.subscribe(() => {
+                console.log(store.getState())
+                ReactDOM.render(<App />, rootHandler)
+            })
+
+            // action generator 
+            const removeUser = (id) => {
+                return {
+                    type: 'REMOVE_USER',
+                    payload:id
+                }
+            }
+
+            const usersForm = (formData) => {
+                return {
+                    type: 'USER_FORM',
+                    payload: formData
+                }
+            }
+
+            const App = () => {
+                return (
+                    <div className="container text-light">   
+                        <UsersListing /> 
+                    </div> 
+                )
+            }
+
+            const UsersListing = () => {
+                return (
+                    <div className="text-center">
+                        <h1>Listing Users - { store.getState().users.length }</h1>  
+                        <UsersTable />
+                        <UsersForm /> 
+                    </div> 
+                )
+            }
+
+            const UsersTable = () => {
+                return (
+                    <table border="1" className="table table-dark table-striped text-light" >
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>name</th>
+                                <th>email</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {store.getState().users.map(user=>{
+                                return (<UserRow user={user} key={user.id} />)
+                            })
+                            }
+                        </tbody>
+                    </table>
+                )
+            }
+
+            const UserRow = (props) => {
+                return (
+                    <tr>
+                        <td>{props.user.id}</td>
+                        <td>{props.user.name}</td>
+                        <td>{props.user.email}</td>
+                        <td>
+                            <button className="btn btn-secondary" onClick={()=>{
+                                const confirmDelete = window.confirm("are you sure?")
+                                if(confirmDelete){
+                                    {store.dispatch(removeUser(props.user.id))}
+                                }
+                            }}
+                            >remove</button>
+                        </td>
+                    </tr>
+                )
+            }
+
+            class UsersForm extends React.Component {
+                constructor(props) {
+                    super(props) 
+                    this.state = {
+                        id:'',
+                        name:'',
+                        email:''
+                    }
+                }
+                
+                handleChange =(e)=>{
+                    e.persist()
+                    this.setState(()=>({
+                        [e.target.name]:e.target.value
+                    }))
+                }
+
+                handleSubmit = (e) => {
+                    e.preventDefault() 
+                    const { id, name, email } = this.state
+                    const formData={
+                        id,
+                        name,
+                        email
+                    }
+                    store.dispatch(usersForm(formData))
+                    this.setState({
+                        id:'',
+                        name:'',
+                        email:''
+                    })
+                }
+
+                render(){
+                    return (
+                        <div className="container">
+                        <form onSubmit={this.handleSubmit} >
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text" >Id</span>
+                                </div>
+                                <input className="form-control" type="text" value={this.state.id} placeholder="enter id" name="id" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text" >Name</span>
+                                </div>
+                                <input className="form-control" type="text" value={this.state.name} placeholder="enter name" name="name" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text" >Email</span>
+                                </div>
+                                <input className="form-control" type="email" value={this.state.email} placeholder="enter email" name="email" onChange={this.handleChange} />
+                            </div>
+                            <div>
+                                <input className="btn btn-secondary btn-lg btn-block" type="submit" />
+                            </div>
+                        </form>
+                    </div>
+                    )
+                }
+        }
+        ReactDOM.render(<App />, rootHandler)
+        </script>
+    </body>
+</html>

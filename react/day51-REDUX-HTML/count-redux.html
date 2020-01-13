@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Count Redux
+    </title>
+</head>
+    
+<body>
+    <div id='root'>
+
+    </div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src='js/redux.js'></script>
+    <script src="js/babel.js"></script>
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root')
+
+        const { createStore, combineReducers } = Redux 
+
+        const countInitialState = { value: 0 }
+        const countReducer = (state = countInitialState, action) => {
+            switch(action.type) {
+                case 'INCREMENT' : 
+                    return {
+                        value: state.value + 1
+                    }
+                case 'UP_BY_TWO' : 
+                    return {
+                        value: state.value + 2
+                    }
+                case 'COUNT_FORM' : 
+                    return {
+                        value: state.value + action.payload
+                    }
+                default: 
+                    return {...state}
+                    // return Object.assign({}, state)
+            }
+        }
+
+        const store = createStore(combineReducers({
+            count: countReducer
+        }))
+
+        store.subscribe(() => {
+            console.log(store.getState())
+            ReactDOM.render(<CompOne />, rootHandle)
+        })
+
+        // action generator 
+        function increment() {
+            return {
+                type: 'INCREMENT'
+            }
+        }
+
+        function upByTwo() {
+            return {
+                type: 'UP_BY_TWO'
+            }
+        }
+
+        function countForm(count) {
+            return {
+                type: 'COUNT_FORM',
+                payload: count 
+            }
+        }
+
+        const CompOne = () => {
+            return (
+                <div>   
+                    <h2> { store.getState().count.value }</h2> 
+                    <CompTwo /> 
+                </div> 
+            )
+        }
+
+        const CompTwo = (props) => {
+            return (
+                <div>
+                    <p> component two </p> 
+                    <CompThree /> 
+                </div> 
+            )
+        }
+
+        const CompThree = (props) => {
+            return (
+                <div>
+                    <p> component three  - store { store.getState().count.value }</p> 
+                    <CompFour /> 
+                </div> 
+            )
+        }
+
+        const CompFour = (props) => {
+            return (
+                <div>
+                    <p> component Four </p> 
+                     <button onClick={() => {
+                        store.dispatch(upByTwo())
+                    }}>
+                        up by 2
+                    </button>
+                    <CompFive /> 
+                </div> 
+            )
+        }
+
+        const CompFive = (props) => {
+            return (
+                <div>
+                    <p> component Five </p> 
+                    <button onClick={() => {
+                        store.dispatch(increment())
+                    }}> up </button>
+                    <CountForm />
+                </div> 
+            )
+        }
+
+        class CountForm extends React.Component {
+            constructor(props) {
+                super(props) 
+                this.state = {
+                    count: ''
+                }
+            }
+            
+            handleChange = (e) => {
+                const count = e.target.value 
+                this.setState(() => ({ count }))
+            }
+
+            handleSubmit = (e) => {
+                e.preventDefault() 
+                store.dispatch(countForm(Number(this.state.count)))
+                this.setState({
+                    count: ''
+                })
+            }
+
+            render(){
+                return (
+                    <div>
+                        <form onSubmit={this.handleSubmit}> 
+                            <input type="number" placeholder="choose number" value={this.state.count} onChange={this.handleChange} />
+                            <input type="submit" />
+                        </form> 
+                    </div> 
+                )
+            }
+        }
+
+
+
+        ReactDOM.render(<CompOne />, rootHandle)
+
+
+    </script>
+</body>
+
+</html>

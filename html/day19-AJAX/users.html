@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head> <title> Users Listing</title></head>
+    <body>
+        <h2>Users Listing - <span id='count'></span></h2>
+        <ul id='listing'>
+        </ul>
+
+        <script>
+            const countHandle = document.getElementById('count')
+            const listingHandle = document.getElementById('listing')
+
+            const xhr = new XMLHttpRequest()
+            // xhr.open(httpMethod, url)
+            // http methods - GET, POST, PUT, DELETE
+
+            // Create(POST), Read(GET), Update(PUT), Delete(DELETE)
+
+            xhr.open('GET','https://jsonplaceholder.typicode.com/users')
+            xhr.send()
+
+            xhr.onload = function(){
+                // json - Javascript Object Notation - string represenation of javascript object (data)
+                console.log(xhr.responseText)
+                // convert json (string) into object (array / obj)
+                const users = JSON.parse(xhr.responseText)
+
+                countHandle.innerHTML = users.length
+
+                users.forEach(function(user){
+                    const li = document.createElement('li')
+                    li.textContent = `${user.name} - ${user.email} - ${user.address.city} - (${user.address.geo.lat}, ${user.address.geo.lng}) - ${user.company.name}`
+                     listingHandle.appendChild(li)
+                })
+            }
+        </script>
+
+        
+    </body>
+</html>

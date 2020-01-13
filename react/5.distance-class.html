@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Distance</title>
+    </head>
+    <body>
+        <div id='root'></div>
+
+        <script src='./js/react.development.js'></script>
+        <script src='./js/react-dom.development.js'></script>
+        <script src='./js/babel.js'></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+
+            class Distance extends React.Component {
+                constructor(){
+                    super()
+                    this.state = {
+                        source: 'Bangalore',
+                        destination: 'Mysore',
+                        kms: 150,
+                        time: '3 hours and 30 mins',
+                        currentTime: new Date()
+                    }
+
+                //     setTimeout(() => {
+                //         this.setState((preState) => ({ time: '3 hours and 40 mins'}))
+                //     }, 15000);
+                //                 
+                setInterval(() => {
+                    this.setState(() => ({ time: ' 3 hours and 50 mins', currentTime: new Date()}))
+                }, 1000);
+            }
+                // UI
+                render(){
+                    const { source, destination, kms, time, currentTime } = this.state  // object destructing
+                    return (
+                        <p> The distance between {source} and {destination} is {kms} kms and time taken is {time} <br /><br /> currentTime : {currentTime.toString()} </p>
+                    )
+                }
+            }
+
+            ReactDOM.render(<Distance />,rootHandle)
+            
+        </script>
+    </body>
+</html>

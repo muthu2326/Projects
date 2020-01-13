@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head> <title>Email Table</title> </head>
+    <body>
+        <form id='myForm'>
+            <div id='container'></div>
+        </form>
+
+        <script>
+            const container = document.getElementById('container')
+
+            const headings = [
+                {th: 'SL'},
+                {th: 'Email'}
+            ]
+
+            const emailList = [ {sl:  1, email:'xyz@gmail.com'},
+                                {sl:  2, email: 'abc@gmail.com'},
+                                {sl:  3, email: 'def@gmail.com'},
+                                {sl:  4, email: 'asd@gmail.com'}
+                            ]
+                    let input = '',table = '',tr = ''
+        
+                    printTable(emailList)   // invoking the print method
+                    
+                    function printTable(array){
+
+                            table = document.createElement('table');
+                            const thead = document.createElement('thead')
+
+                            headings.forEach(function(head){
+                            const th = document.createElement('th')
+                            const head1 = document.createTextNode(head.th)
+
+                            th.appendChild(head1)
+                            thead.appendChild(th)
+                            table.appendChild(thead)
+                            })
+
+                            console.log('array length = ' + array.length)
+                            
+                            array.forEach(function(email){
+                            tr = document.createElement('tr');                           
+
+                            const td1 = document.createElement('td');
+                            const td2 = document.createElement('td');
+
+                            const slno = document.createTextNode(email.sl)
+                            const emailId = document.createTextNode(email.email);
+
+                            td1.appendChild(slno);
+                            td2.appendChild(emailId);
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+
+                            table.appendChild(tr);
+                            table.border = 1
+                            container.appendChild(table);
+                            console.log(tr.children[1].textContent)
+
+                        })
+
+                        const label = document.createElement('label')
+                        label.appendChild(document.createTextNode('Enter the email '))
+                        
+                        container.append(document.createElement('br'))
+                        input = document.createElement('input')
+                        input.type = 'text'
+                        input.id = 'email'
+                        input.placeholder = 'xyz@gmail.com'
+
+                        const buttons = document.createElement('button')
+                        buttons.appendChild(document.createTextNode('delete'))
+                        buttons.id = 'delete'
+
+                        container.append(label)
+                        container.append(input)
+                        container.append(buttons)
+
+                    }
+
+                        const myForm = document.getElementById('myForm')
+                        const deleteHandle = document.getElementById('delete')
+                        const inputHandle = document.getElementById('input')
+                        
+                                //if('abc@gmail.com' == tr.childNodes[1].innerHTML){
+                                    console.dir(typeof tr.childNodes[1].innerHTML)
+                                
+
+                                 //tr.childNodes[1].removeChild(td.children[1])
+
+
+
+                        myForm.addEventListener('submit',function(event){
+                            event.preventDefault()
+                          
+                            for(let i = 0; i < emailList.length; i++){
+                                if(emailList[i].email == input.value){
+                                    emailList.splice(i,1)
+                                }
+                            }
+                                console.log(emailList)
+                                container.innerHTML = ''
+
+                           printTable(emailList)
+                            
+                        })
+  
+        </script>
+    </body>
+</html>

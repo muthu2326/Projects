@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head> <title> Log in </title></head>
+    <body>
+        <form>
+        <h1> Log in</h1>
+        <label> Username<br />
+        <input type='text'> </label> <br/>
+        <label> Password<br>
+        <input type='password' id='pass'></label><br />
+         <input type='checkbox' id='showPassword'>Show password <br /><br>
+         <button id='login'>Login</button>
+        </form>
+
+         <script> 
+            const check = document.getElementById('showPassword')
+            const pass = document.getElementById('pass')
+            // these event handlers methods are present on Web api - at browser level
+            check.addEventListener('click',function(){
+                if(check.checked){
+                    // pass.type = 'text'
+                    pass.setAttribute('type', 'text') // - this method takes 2 arguments (attributename,Value of the attribute)
+                }else{
+                  //  pass.type = 'password'
+                    pass.setAttribute('type', 'password')
+                }
+            })
+         </script>
+    </body>
+</html>

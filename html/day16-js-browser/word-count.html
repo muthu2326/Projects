@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>    <title> Word Count</title>     </head>
+    <body>
+        <h1>Word Count</h1>
+        <textarea id='textarea'></textarea>
+        <p>The no of words <span id='wordCount'> 0 </span> and no of characters <span id='charCount'> 0 </span> in the textarea</p>
+
+        <script>
+            
+            let char = 0
+            const textarea = document.getElementById('textarea')
+            console.log(textarea)
+            const wordCount = document.getElementById('wordCount')
+            const charCount = document.getElementById('charCount')
+            
+            textarea.addEventListener('keyup', function(){
+                const count = textarea.value.split(' ')
+                wordCount.innerHTML = count.length - 1
+                char++
+                charCount.innerHTML = textarea.value.length
+            })
+        </script>
+    </body>
+</html>

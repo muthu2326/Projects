@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Count Normal
+        </title>
+    </head>
+    <body>
+        <div id='root'>
+
+        </div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root')
+
+        class CompOne extends React.Component {
+            constructor(props) {
+                super(props) 
+                this.state = {
+                    count: 0 
+                }
+            }
+
+            handleClick = () => {
+                this.setState((prevState) => ({
+                    count: prevState.count + 1
+                }))
+            }
+
+            render() {
+                return (
+                    <div>   
+                        <h2> { this.state.count } </h2> 
+                        <CompTwo handleClick={this.handleClick} /> 
+                    </div> 
+                )
+            }
+        }
+
+        const CompTwo = (props) => {
+            return (
+                <div>
+                    <p> component two </p> 
+                    <CompThree handleClick={props.handleClick} /> 
+                </div> 
+            )
+        }
+
+        const CompThree = (props) => {
+            return (
+                <div>
+                    <p> component three </p> 
+                    <CompFour handleClick={props.handleClick} /> 
+                </div> 
+            )
+        }
+
+        const CompFour = (props) => {
+            return (
+                <div>
+                    <p> component Four </p> 
+                    <CompFive handleClick={props.handleClick} /> 
+                </div> 
+            )
+        }
+
+        const CompFive = (props) => {
+            return (
+                <div>
+                    <p> component Five </p> 
+                    <button onClick={props.handleClick}> up </button> 
+                </div> 
+            )
+        }
+
+        ReactDOM.render(<CompOne />, rootHandle)
+    </script>
+    </body>
+</html>

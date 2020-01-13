@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Wheather Forcast
+        </title>
+        <body>
+            <h2> Whather Forcast</h2>
+            <form id='myForm'>
+                <div id='data'>
+                    <input type='text' id='text'>
+                    <input type='submit'><br>
+                    <lable>Current Temperature</lable>
+                    <span id='span'></span>
+                </div>
+            </form>
+            <script>
+                const div = document.getElementById('data')
+                const formHandle = document.getElementById('myForm')
+                const span = document.getElementById('span')
+                const inputHandle = document.getElementById('text')
+//                console.log(inputHandle)
+                var user = 'cc',lat = '',lng = ''
+                const xhr = new XMLHttpRequest()
+                xhr.open('GET','https://jsonplaceholder.typicode.com/users/1')
+                xhr.send()
+
+                xhr.onload = function(){
+                    user = JSON.parse(xhr.responseText)                    
+                    inputHandle.value = user.name
+                    console.log(user)
+                }
+
+                formHandle.addEventListener('submit',function(e){
+                    e.preventDefault()
+                    const xhr2 = new XMLHttpRequest()
+                    xhr2.open('GET',`https://api.darksky.net/forecast/e5a8fb49fa93bf0d6add39026e107c72/12.9716,77.5946`)
+                    xhr2.send()
+
+                    xhr2.onload = function(){
+                        const Wheather = JSON.parse(xhr2.responseText)
+                        div.append(document.createElement('br'))
+                        div.append(`Time-Zone: ${Wheather.timezone} \n Temprature: ${Wheather.currently.temperature} \n Summary: ${Wheather.currently.summary}`)
+                    }
+                })
+            </script>
+        </body>
+    </head>
+</html>

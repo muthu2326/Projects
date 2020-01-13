@@ -1,0 +1,48 @@
+.navbar {
+  color : white;
+}
+.link{
+  color : white;
+}
+.ml-auto{
+  font-size: 18px;
+  font-family: arial;
+  color : white;
+}
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 5vmin;
+  pointer-events: none;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.home-logo{
+  height: 100vmin;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-top: -100px;
+  animation: App-logo-spin infinite 20s linear;
+ 
+}
+.postlink{
+  color :black;
+  font-size: 20px;
+}
+.listcolor{
+  background-color: lightgray;
+}
+.list-Author{
+  color :black;
+  font-size: 20px;
+}
+.random-color{
+  color :black;
+}

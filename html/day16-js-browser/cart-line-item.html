@@ -1,0 +1,60 @@
+ <!DOCTYPE html>
+ <html>
+     <head>
+         <title>Cart Item</title>
+     </head>
+     <body>
+         <h2> Cart Line Items  </h2>
+         <table>
+             <thead>
+                 <tr>
+                     <th>Name</th>
+                     <th>Action</th>
+                     <th>Total</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                    <td id='name'> </td>
+                    <td><button id='decrease'>-</button> <span id='qty'>  </span><button id='increase'>+</button></td>
+                    <td id='total'> </td>
+                 </tr>
+             </tbody>
+         </table>
+
+         <script>
+             const item = {
+                 name: 'cheese sandwich',
+                 price: 35,
+                 quantiy: 1
+             }
+
+             const nameHandle = document.getElementById('name')
+             const decreaseHandle = document.getElementById('decrease')
+             const increaseHandle = document.getElementById('increase')
+             const qtyHandle = document.getElementById('qty')
+             const totalHandle = document.getElementById('total')
+
+             nameHandle.innerHTML = item.name
+             qtyHandle.innerHTML = item.quantiy
+             totalHandle.innerHTML = item.quantiy * item.price
+
+             decreaseHandle.addEventListener('click', function(){
+                 if(item.quantiy > 1){
+                     item.quantiy--
+                     qtyHandle.innerHTML = item.quantiy
+                     totalHandle.innerHTML = item.price * item.quantiy
+                 }else{
+                     document.getElementById('decrease').disabled
+                 }
+             })
+
+             increaseHandle.addEventListener('click', function(){
+                 item.quantiy++
+                 qtyHandle.innerHTML = item.quantiy
+                 totalHandle.innerHTML = item.price * item.quantiy
+             })
+
+         </script>
+     </body>
+ </html>

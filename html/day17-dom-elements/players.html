@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Players</title></head>
+    <body>
+        <form>
+            <h2>Dream 11</h2>
+            <h2>Listing Players - <span id='count'></span></h2>
+            <input type='text' id='search' placeholder="search">
+            <ol id='list'>
+
+            </ol>
+        </form>
+
+        <script>
+
+            const players = ['sachin','virat','shewag']
+            const searchHandle = document.getElementById('search')
+            const listHandle = document.getElementById('list')
+            const count = document.getElementById('count')
+
+            function listBuild(players){
+                    count.innerHTML = players.length
+                    players.forEach(function(player){
+                    const li = document.createElement('li')
+                    li.textContent = player
+                    listHandle.appendChild(li)
+                })
+            }            
+            players.push('yuvi')
+
+            listBuild(players)
+
+            searchHandle.addEventListener('keyup',function(){
+              const  result = players.filter(function(player){
+                    return player.toLowerCase().includes(searchHandle.value.toLowerCase())
+                })
+                listHandle.innerHTML = ''
+                listBuild(result)
+            })
+
+        </script>
+    </body>
+
+</html>

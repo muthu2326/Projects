@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+        </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+        <script crossorigin src='https://unpkg.com/axios/dist/axios.min.js'></script>
+        <script crossorigin src='https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.1/redux.js'></script>
+    </head>
+    <body style="background-color: rgb(158, 154, 154)">
+        <div id="root"></div>
+        
+        <script type='text/babel'>
+            const rootHandler=document.getElementById('root')
+            class CompOne extends React.Component {
+            constructor(props) {
+                super(props) 
+                this.state = {
+                    count: 0 
+                }
+            }
+
+            handleClick = () => {
+                this.setState((prevState) => ({
+                    count: prevState.count + 1
+                }))
+            }
+
+            render() {
+                return (
+                    <div>   
+                        <h2> { this.state.count } </h2> 
+                        <CompTwo handleClick={this.handleClick} /> 
+                    </div> 
+                )
+            }
+        }
+
+        const CompTwo = (props) => {
+            return (
+                <div>
+                    <p> component two </p> 
+                    <CompThree handleClick={props.handleClick} /> 
+                </div> 
+            )
+        }
+
+        const CompThree = (props) => {
+            return (
+                <div>
+                    <p> component three </p> 
+                    <CompFour handleClick={props.handleClick} /> 
+                </div> 
+            )
+        }
+
+        const CompFour = (props) => {
+            return (
+                <div>
+                    <p> component Four </p> 
+                    <CompFive handleClick={props.handleClick} /> 
+                </div> 
+            )
+        }
+
+        const CompFive = (props) => {
+            return (
+                <div>
+                    <p> component Five </p> 
+                    <button onClick={props.handleClick}> up </button> 
+                </div> 
+            )
+        }
+
+
+
+        ReactDOM.render(<CompOne />, rootHandler)
+        </script>
+    </body>
+</html>

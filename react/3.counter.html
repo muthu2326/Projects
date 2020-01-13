@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Counter</title>
+    </head>
+    <body>
+        <div id='root'></div>
+
+        <script src='./js/react.development.js'></script>
+        <script src='./js/react-dom.development.js'></script>
+
+        <!--https://unpkg.com/babel-standalone@6.26.0/babel.js-->
+        <script src='./js/babel.js'></script>
+
+        <script type='text/babel'>
+            
+            const rootHandle = document.getElementById('root')
+            class Counter extends React.Component {
+                constructor(){
+                    super()                 // invoking the super class constructor method React.Component
+                        this.state = {      // a property of React.Component
+                            count: 0
+                        }
+                    }
+
+                    render(){
+                        console.log('render method called')
+                        return (            // jsx - javascript xml - browsers doesnt understand this hence we use bable.js
+                            <div>
+                                <h2>{this.state.count}</h2>
+                                <button onClick={() => {
+                                    this.setState((preState => ({ count: preState.count + 1}))) // preState is also a propert of React.Component
+                                }}> up </button> 
+
+                                
+                                <button onClick={() => {
+                                    this.setState((preState => ({ count: preState.count - 1}))) // setState() methods calls render() on every change of state properties  
+                                }}> down </button>
+                           </div>    
+                        )
+                    }
+
+                }
+
+                const ele = (
+                    <div>
+                        <Counter />
+                        <Counter />
+                        </div>
+                )
+                
+                ReactDOM.render(ele,rootHandle)    // ReactDOM.render(createdElements, ParentElement) 
+
+        </script>
+    </body>
+</html>

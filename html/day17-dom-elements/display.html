@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Tags</title></head>
+    <body>
+        <label>Enter Text 
+            <input type='text' id='text'>
+        </label><br>
+        <label>
+            <select id='select'>
+                <option value='h1'>h1</option>
+                <option value='h2'>h2</option>
+                <option value='b'>b</option>
+                <option value='em'>em</option>
+            </select>
+            <button id='generate'>Generate</button>
+        </label><br><br>
+        <span id='output'></span>
+        <script>
+            
+            const text = document.getElementById('text')
+            const option = document.getElementById('select')
+            const generate = document.getElementById('generate')
+            const output = document.getElementById('output')
+
+            generate.addEventListener('click', function(){
+                const create = document.createElement(option.value)
+                create.textContent = text.value
+                output.innerHTML = ''
+                output.append(create)
+            })
+        </script>
+    </body>
+</html>

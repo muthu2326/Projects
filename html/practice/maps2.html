@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <title>Simple Map</title>
+                <meta name="viewport" content="initial-scale=1.0">
+                <meta charset="utf-8">
+                <style>
+                  /* Always set the map height explicitly to define the size of the div
+                   * element that contains the map. */
+                  #map {
+                    height: 100%;
+                  }
+                  /* Optional: Makes the sample page fill the window. */
+                  html, body {
+                    height: 100%;
+                    margin: 0;
+                    padding: 0;
+                  }
+                </style>
+              </head>
+              <body>
+                  <forem id='map'></form>
+                <div id='container'>
+                    <input type='submit' value='Get Location'>
+                </div>
+
+              </body>
+             
+              <script>
+    const formHandle = document.getElementById('map')
+    const divHandle = document.getElementById('container')
+
+  //  formHandle.addEventListener('submit',function(e){
+    //    e.preventDefault()
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET','http://maps.google.com/maps/api/js?key=AIzaSyATSgr7YYGAKyMrUjR4vV0EBjESAeik0ig'&)
+        xhr.send()
+
+        xhr.onload = function(){
+            const navigator = JSON.parse(xhr.responseText)
+
+                    if (navigator.geolocation) { 
+                navigator.geolocation.getCurrentPosition(function(position) {  
+                    console.log(position.coords.latitude, position.coords.longitude)
+                                                    
+                var point = new google.maps.LatLng(position.coords.latitude, 
+                                                    position.coords.longitude);
+                    
+                // Initialize the Google Maps API v3
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: point,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+            
+                // Place a marker
+                new google.maps.Marker({
+                    position: point,
+                    map: map
+                });
+                }); 
+            } 
+            else {
+                alert('W3C Geolocation API is not available');
+            } 
+        }
+   // })
+
+  </script>  
+</html>

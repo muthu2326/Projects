@@ -1,0 +1,74 @@
+  <!DOCTYPE html>
+<html>
+    <head> <title> Loacation </title></head>
+<body align='center'>
+<form id='locate'>
+<input type='submit' value='Get My Location'>
+<p id="latLng"></p>
+<div id="map" style="width: 1000px; height: 830px; margin-left:200px"></div>
+<script> 
+var conatiner = document.getElementById("latLng");
+const locateHandle = document.getElementById('locate')
+let lat = '',lng = '' 
+const map = document.getElementById('map')
+
+locateHandle.addEventListener('submit',function(e){
+    map.innerHTML = ''
+    e.preventDefault()
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+      } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  
+        function showPosition(position) {
+        lat = position.coords.latitude
+        lng = position.coords.longitude
+        // lat = 12.9300
+        // lng = 77.5854
+        const loacteMap = document.createElement('iframe')
+        loacteMap.height = 400
+        loacteMap.width = 500
+        loacteMap.border = 0
+        loacteMap.src = `https://www.mapquestapi.com/staticmap/v4/getmap?key=6xrnxrU2gb1wTdAwlLFqmnWb2lg94ch4&width500px&height=500px&size=500,500&type=map&imagetype=png&zoom=17&scalebar=false&center=${lat},${lng}&ellipse=fill:0x70ef0000|color:0xff0000|width:4|${lat},${lng},${lat + 0.04},${lng + 0.05}`
+        map.append(loacteMap)
+        
+        conatiner.innerHTML = " <b>Your current position is:</b><br><br>Latitude: " + lat + 
+        "<br>Longitude: " + lng
+       conatiner.append(document.createElement('hr'))
+
+            const xhr = new XMLHttpRequest()
+            xhr.open('GET',`https://api.darksky.net/forecast/e5a8fb49fa93bf0d6add39026e107c72/${lat},${lng}`)
+            xhr.send()
+            console.log(lat,lng)
+            xhr.onload = function(){
+                const temperature = JSON.parse(xhr.responseText)
+                conatiner.append(`Current Temperature is: ${temperature.currently.temperature}`)
+            }
+        }
+     })
+                 // L.mapquest.key = '6xrnxrU2gb1wTdAwlLFqmnWb2lg94ch4'; // lYrP4vF3Uk5zgTiGGuEzQGwGIVDGuy24
+
+            // var map2 = L.mapquest.map('map', {
+            // center: [lat, lng],
+            // layers: L.mapquest.tileLayer('map'),
+            // zoom: 6
+            // });
+
+            // L.marker([lat,lng], {
+            // icon: L.mapquest.icons.marker(),
+            // draggable: false
+            // }).bindPopup('My loacation','me').addTo(map);
+
+            // L.circle([lat, lng], { radius: 20000 }).addTo(map);
+
+            // var denverLatLngs = [
+            // [lat,lng],
+            // ];
+
+            // L.polygon(denverLatLngs, {color: 'red'}).addTo(map);
+
+
+ </script>
+</body>
+</html>

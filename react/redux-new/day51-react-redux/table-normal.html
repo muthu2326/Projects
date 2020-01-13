@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+        </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+        <script crossorigin src='https://unpkg.com/axios/dist/axios.min.js'></script>
+        <script crossorigin src='https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.1/redux.js'></script>
+    </head>
+    <body style="background-color: rgb(0, 0, 0)">
+        <div id="root"></div>
+        
+        <script type='text/babel'>
+            const rootHandler=document.getElementById('root')
+            class Apps extends React.Component{
+                constructor(){
+                    super()
+                    this.state ={
+                        users:[
+                            {id:1, name:"arjun", email:"arjun@gmail.com"},
+                            {id:2, name:"varun", email:"varun@gmail.com"},
+                            {id:3, name:"tom", email:"tom@gmail.com"},
+                            {id:4, name:"nick", email:"nick@gmail.com"},
+                        ],
+                        id:'',
+                        name:'',
+                        email:''
+                    }
+                }
+                handleChange =(e)=>{
+                    e.persist()
+                    this.setState(()=>({
+                        [e.target.name]:e.target.value
+                    }))
+                }
+                handleSubmit = (e) => {
+                    e.preventDefault()
+                    const { id, name, email } = this.state
+                    const formData={
+                        id,
+                        name,
+                        email
+                    }
+                    this.setState((prevState)=>({
+                        users:[...prevState.users, formData]
+                    }))
+                    this.setState({
+                        id:'',
+                        name:'',
+                        email:''
+                    })
+                }
+                handleRemove = (id)=>{
+                    this.setState((prevState) => ({
+                        users: prevState.users.filter(users=> users.id!=id)
+                    }))
+                }
+                render(){
+                    console.log(this.state.users)
+                    return (
+                        <div className="container text-center text-light" >
+                            <UsersListing users={this.state.users} id={this.state.id} name={this.state.name} email={this.state.email} handleRemove={this.handleRemove} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+                        </div>
+                    )
+                }
+            }
+            const UsersListing = (props) => {
+                return (
+                    <div>
+                        <h1>Listing Users - {props.users.length}</h1>
+                        <UsersTable users={props.users} handleRemove={props.handleRemove}/>
+                        <UserForm handleChange={props.handleChange} handleSubmit={props.handleSubmit} id={props.id} name={props.name} email={props.email} />
+                    </div>
+                )
+            }
+            const UsersTable = (props) => {
+                return(
+                    <table border="1" className="table table-dark table-striped text-light" >
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>name</th>
+                                <th>email</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {props.users.map(user=>{
+                                return (<UserRow user={user} key={user.id} handleRemove={props.handleRemove}/>)
+                            })
+                            }
+                        </tbody>
+                    </table>
+                )
+            }
+            const UserRow = (props) => {
+                return(
+                    <tr>
+                        <td>{props.user.id}</td>
+                        <td>{props.user.name}</td>
+                        <td>{props.user.email}</td>
+                        <td>
+                            <button className="btn btn-secondary" onClick={()=>{
+                                const confirmDelete = window.confirm("are you sure?")
+                                if(confirmDelete){
+                                    {props.handleRemove(props.user.id)}
+                                }
+                            }}
+                            >remove</button>
+                        </td>
+                    </tr>
+                )
+            }
+            const UserForm = (props) => {
+                return(
+                    <div className="container">
+                        <form onSubmit={props.handleSubmit} >
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text" >Id</span>
+                                </div>
+                                <input className="form-control" type="text" value={props.id} placeholder="enter id" name="id" onChange={props.handleChange} />
+                            </div>
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text" >Name</span>
+                                </div>
+                                <input className="form-control" type="text" value={props.name} placeholder="enter name" name="name" onChange={props.handleChange} />
+                            </div>
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text" >Email</span>
+                                </div>
+                                <input className="form-control" type="email" value={props.email} placeholder="enter email" name="email" onChange={props.handleChange} />
+                            </div>
+                            <div>
+                                <input className="btn btn-secondary btn-lg btn-block" type="submit" />
+                            </div>
+                        </form>
+                    </div>
+                )
+            }
+            ReactDOM.render(<Apps />,rootHandler)
+        </script>
+    </body>
+</html>

@@ -1,0 +1,49 @@
+ODM - Object Document Mapper 
+mongoose - NoSQL 
+ORM - Object Relational Mapper 
+sequalize - SQL 
+ODM - 
+1. It will map a model to a collection 
+2. It maps an object to a document 
+3. It maps an object property to a documents field 
+
+ORM
+1. It maps a model to a table 
+2. It maps an object to a row 7
+3. It maps an object property to a  column 
+
+user 
+    username - String - required - unique
+    email - String - required - unique - format
+    password - String - required - 8 - 128 chars
+    stories [] // hold story ids
+    bookmarks [] // holds story ids
+
+topic
+    topic name []
+
+story
+    _id
+    title 
+    body 
+    user
+    createdDate - Default 
+    isPublished boolean
+    publishDate
+    previewImageUrl - String ( multer ) 
+    topic  
+    tags []
+    responses [responseSchema]
+    claps [
+        {
+            user, count ( max: 5)
+        }
+    ]
+tags    
+    name 
+    stories[]
+// responseSchema
+response
+    user
+    body 
+    createdAt

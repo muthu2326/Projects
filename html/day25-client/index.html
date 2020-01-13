@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>    <title>Client</title>    </head>
+    <body>
+        <h2>Listing users</h2>
+        <ul id='users'>
+        </ul><br>
+        <ul id='movies'>
+        </ul>
+        <script>
+            const users = document.getElementById('users')
+            const movies = document.getElementById('movies')
+
+            fetch('http://localhost:3000/users')
+
+            .then(function(response){
+                console.log(response)
+                return response.json()
+            })
+            .then(function(users){
+                let output = ''
+                users.forEach(function(user){
+                    output += `<li> ${user.name} - ${user.email}`
+                })
+                users.innerHTML = output
+            })
+            .catch(function(err){
+                console.log(err)
+            })
+
+        </script>
+     </body>
+   </html>

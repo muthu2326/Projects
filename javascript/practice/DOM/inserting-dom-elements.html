@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ 
+</head>
+
+<body>
+<ul>
+    <li>Buy groceries</li>
+    <li>Feed the cat</li>
+    <li>Do laundry</li>
+  </ul>
+
+  <script>
+      // To-do list ul element 
+const todoList = document.querySelector('ul'); 
+// Create new to-do 
+const newTodo = document.createElement('li'); 
+newTodo.textContent = 'Do homework'; 
+
+// Add new todo to the end of the list 
+todoList.appendChild(newTodo);
+
+const anotherTodo = document.createElement('li'); 
+anotherTodo.textContent = 'Pay bills'; 
+
+todoList.insertBefore(anotherTodo, todoList.children[3]); 
+
+const modifiedTodo = document.createElement('li'); 
+modifiedTodo.textContent = 'Feed the dog'; 
+
+// Replace existing to-do with modified to-do 
+todoList.replaceChild(modifiedTodo, todoList.children[3]); 
+
+
+
+  </script>
+</body>
+  </html>

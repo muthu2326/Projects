@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Count</title>
+    </head>
+    <body>
+        <h1 id='count'>0</h1>
+        <button id='upBtn'>Up</button>
+        <button id='downBtn'>Down</button>
+        <button id='resetBtn'>Reset</button>
+        <script>
+            let count = 0
+            function countUp(){
+                count += 1
+                countHandle.innerHTML = count
+            }
+
+            function countDown(){
+                if(count > 0){
+                    count -= 1
+                    countHandle.innerHTML = count
+                }else{
+                    alert('Value cannot be decremented less than zero')
+                }
+            }
+
+            function reset(){
+                count = 0
+                countHandle.innerHTML = 0
+            }
+
+            const countHandle = document.getElementById('count')
+            const upBtnHandle = document.getElementById('upBtn')
+            const downBtnhandle = document.getElementById('downBtn')
+            const resetHandle = document.getElementById('resetBtn')
+
+            upBtnHandle.addEventListener('click', function(){
+                countUp()
+            })
+
+            downBtnhandle.addEventListener('click', function(){
+                countDown()
+            })
+
+            resetHandle.addEventListener('click', function(){
+                reset()
+            })
+        </script>
+
+    </body>
+</html>

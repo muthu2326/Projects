@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+    <head>
+        <title>
+        Listing User
+    </title>
+    </head>
+    <body>
+        <h2> Listing users</h2>
+        <ul id='listings'>
+
+        </ul>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <script>
+            
+            const listhandle = document.getElementById('listings')
+
+            // axios implementation - returns promises object
+            // has 2 methods .then() - on success, .catch() - on error
+
+            axios.get('https://jsonplaceholder.typicode.com/users')
+            .then(function(response){   //sucessful
+                const users = response.data
+                let output = ''
+                users.forEach(function(user){
+                    output += `<li> ${user.name} - ${user.email}`
+                })
+                listhandle.innerHTML = output
+            })
+            .catch(function(err){
+                console.log(err.message)
+            })
+
+            // fetch() - ES6 implementation - fetch api
+            // fetch('https://jsonplaceholder.typicode.com/users')
+
+            // .then(function(response){
+            //     return response.json()
+            // })
+            // .then(function(users){
+            //     let output = ''
+            //     users.forEach(function(user){
+            //         output += `<li> ${user.name} - ${user.email}`
+            //     })
+            //     listhandle.innerHTML = output
+            // })
+            // .catch(function(err){
+            //     console.log(err)
+            // })
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Listing</title>
+    </head>
+    <body>
+        <div id='root'></div>
+
+        <script src='../js/react.development.js'></script>
+        <script src='../js/react-dom.development.js'></script>
+        <script src='../js/babel.js'></script>
+
+        <script type='text/babel'>
+            const rootHandle = document.getElementById('root')
+
+            class Select extends React.Component {
+                constructor(){
+                    super()
+
+                    this.state = {
+                        categories: [
+                            {id: 1, name: 'Stationary'},
+                            {id: 2, name: 'Grocery'}
+                        ],
+                        subCategories: [
+                            {id: 1, catID: 1, name: 'Pen'},
+                            {id: 2, catID: 2, name: 'Bread'},
+                            {id: 3, catID: 1, name: 'Scale'},
+                            {id: 4, catID: 2, name: 'Biscuit'},
+                        ],
+                        sub: []
+                    }
+                }
+
+                selectChange = (e) => {
+                        const catId = e.target.value
+                        const sub = this.state.subCategories.filter((item) => {
+                            return catId == item.catID
+                        })
+                        this.setState(() => ({ sub }))
+                    }
+
+                render(){
+
+                    return(
+                        <div>
+                            <label> Category 
+                                <select onChange={this.selectChange}>
+                                    <option>Select</option>
+                                    {this.state.categories.map((category) => {
+                                        return(
+                                            <option key={category.id} value={category.id}> {category.name} </option>
+                                        )
+                                    })}
+                                </select>
+                            </label> <br />
+
+                            <label> Sub-Category
+                                <select>
+                                    <option>Select</option>
+                                    { this.state.sub.map((item) => {
+                                            return(
+                                                 <option key={item.id} value={item.catID}> {item.name} </option>
+                                                 )
+                                     })}   
+                                                                                                                                                       
+                                </select>
+                            </label>
+                        </div>
+                    )
+                }
+            }
+
+            ReactDOM.render(<Select />,rootHandle)
+        </script>
+    </body>
+</html>

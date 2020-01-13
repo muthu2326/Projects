@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>    <title>Client</title>    </head>
+    <body>
+        <h2>Listing owners</h2>
+        <ul id='owners'>
+        </ul><br>
+        <h2>Listing cars</h2>
+        <ul id='cars'>
+        </ul>
+        <ul id='quotes'>
+            </ul>    
+        <script>
+            const container = document.getElementById('owners')
+            const container2 = document.getElementById('cars')
+            const quotes = document.getElementById('quotes')
+            
+            display('owners',container)
+            display('models',container2)
+            display('quotes',quotes)
+            
+            function display(page,container){
+       
+                fetch(`http://localhost:3001/${page}`)
+                    
+                .then(function(response){
+                        return response.json()
+                })
+                .then(function(data){
+                let output = ''
+
+                    if(page == 'owners'){
+                        data.forEach(function(owner){
+                        output += `<li> ${owner.id} - ${owner.name}`
+                        })
+                    }else if(page == 'models'){
+                        data.forEach(function(car){
+                        output += `<li> ${car.model} - ${car.make}`
+                        })
+                    }
+                    else if(page == 'quotes'){
+                        data.forEach(function(quotes){
+                        output += `<li> ${quotes.quote} - ${quotes.author}`
+                        })
+                }
+                container.innerHTML = output
+                })
+                .catch(function(err){
+                    console.log(err)
+                })
+        }
+        </script>
+    </body>
+</html>

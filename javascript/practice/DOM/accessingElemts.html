@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tag Name</title>
+    </head>
+    <body>
+      <table id='forecast-table'>
+          <tbody>
+          <tr>
+              <td>td 1</td>
+              <td>td 2</td>
+              <td>td 3</td>
+              <td>td 4</td>
+          </tr>
+        </tbody>
+      </table>
+        <p>This is p tag 1</p>
+        <p>This is p tag 2</p>
+        <!-- inline event handlers-->
+        <button onclick="change()">click</button>
+        <script>
+            
+        // Check the status of each data cell in a table
+        let table = document.getElementById('forecast-table'); 
+        let cells = document.querySelectorAll('td') 
+        const p = document.querySelectorAll('p')
+
+        function change(){
+            cells.forEach(function(ele,i){
+                ele.textContent = 'changed'
+            })
+        }
+
+        console.log(cells)
+        console.log(p)
+        </script>
+    </body>
+</html>

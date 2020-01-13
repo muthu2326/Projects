@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Guess Game</title>
+    </head>
+    <body> 
+        <script>
+            const name = prompt('Enter your name')
+            console.log('Welcome to the game ' +name)
+
+            //generating random number
+            const targetNumber = Math.round(Math.random() * 100)  //camel casing
+            console.log(targetNumber)
+
+            let playerChances = 0
+            const maxChances = 10
+
+            for(let i = 1; i <= maxChances; i++){
+                playerChances = maxChances - i + 1
+                const playerGuess = prompt('Guess the number, You have ' + playerChances + ' left')
+                console.log(playerGuess)
+
+                if(playerGuess < targetNumber){
+                    console.log('Oops! your guess was low')
+                } else if(playerGuess > targetNumber){
+                    console.log('Oops! your guess was high')
+                } else if(playerGuess == targetNumber){
+                    console.log('Good job, '+ name + '! ' + 'You guessed my number in '+ i + ' guesses')
+                    break
+                }   
+            }
+            console.log('Sorry You did not get my number, My number was '+ targetNumber)
+        </script>
+    </body>
+</html>

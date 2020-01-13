@@ -1,0 +1,17 @@
+inventer - brendon eich
+    - live script 93 - 94
+
+
+sun mciro systems
+    - java
+
+    live script - javascript
+
+    microsoft - ie 3
+        -jscript
+
+    Browsers : - netscape navigator - javascript
+               - ie 3 -jscript
+
+    javascript - ECMA - european computer manufactuerer 
+    
