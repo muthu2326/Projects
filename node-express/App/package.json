@@ -24,7 +24,7 @@
     "package.json": "^2.0.1",
     "react": "^16.8.6",
     "react-strap": "0.0.1",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "globals": {
     "window": true,
