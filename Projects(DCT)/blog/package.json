@@ -19,7 +19,7 @@
     "mongoose": "^5.4.16",
     "nodemon": "^1.18.10",
     "react": "^16.8.6",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {},
   "description": ""
